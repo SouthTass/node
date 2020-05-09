@@ -35,15 +35,10 @@ http.createServer(function(req, res){
     console.log("mysql", result);
   });
 
-
-  
-  
   setTimeout(() => {
     console.log("http", result);
     res.writeHead(200, { 'Content-Type': 'application/json'});
     res.write(JSON.stringify(result));
     res.end();
   }, 3000);
-  
-  
 }).listen(3000);
