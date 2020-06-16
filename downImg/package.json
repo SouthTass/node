@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "http": "^0.0.1-security",
-    "mysql": "^2.18.1",
-    "request": "^2.88.2",
-    "url": "^0.11.0"
-  }
-}
