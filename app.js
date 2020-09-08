@@ -16,14 +16,14 @@ function get(url) {
       let result = JSON.parse(res.text);
       let sql = 'SELECT content FROM joke_list';
       connection.query(sql, function (errq, resq) {
-        let index = resq.findIndex((item) => { result.newslist[0].content == item.content });
-        console.log(index == -1 ? "不重复" : "重复");
+        let index = resq.findIndex((item) => { return result.newslist[0].content == item.content });
+        console.log(index == -1 ? "唯一" : `重复${moment()}`);
         if(index == -1){
           // if(result.code == 200 && result.newslist && result.newslist.length > 0 && result.newslist[0].content){
             let  addSql = 'INSERT INTO joke_list(content,create_time) VALUES(?,?)';
             let  addSqlParams = [ result.newslist[0].content, moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')];
             connection.query(addSql,addSqlParams,function (errx, resx) {
-              console.log("内容：", index == -1 ? result.newslist[0].content : "重复内容");
+              // console.log("内容：", index == -1 ? result.newslist[0].content : "重复内容");
               let timer = setTimeout(() => {
                 if(count == 50000){
                   connection.end();
@@ -32,11 +32,14 @@ function get(url) {
                 count++;
                 get('http://api.tianapi.com/txapi/saylove/index?key=cdd8adeb98c09016521a6c9bcfc2a54b');
                 clearTimeout(timer);
-              }, 500);
+              }, 300);
             });
           // }
         }else{
-          get('http://api.tianapi.com/txapi/saylove/index?key=cdd8adeb98c09016521a6c9bcfc2a54b');
+          let timeset = setTimeout(() => {
+            get('http://api.tianapi.com/txapi/saylove/index?key=cdd8adeb98c09016521a6c9bcfc2a54b');
+            clearTimeout(timeset);
+          }, 300);
         }
       })
     });
