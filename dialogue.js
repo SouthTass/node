@@ -15,11 +15,10 @@ function get(url) {
   superagent.get(url)
     .end(function (err, res) {
       let result = JSON.parse(res.text);
-      let sql = 'SELECT dialogue FROM dialogue';
+      let sql = `SELECT dialogue FROM dialogue WHERE dialogue = "${result.newslist[0].dialogue}"`;
       connection.query(sql, function (errq, resq) {
-        let index = resq.findIndex((item) => { return result.newslist[0].dialogue == item.dialogue });
-        console.log(index == -1 ? "唯一" : `重复${moment()}`);
-        if(index == -1){
+        if(resq && resq.length < 1){
+          console.log("唯一", moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'));
           let addSql = 'INSERT INTO dialogue(type, source, dialogue, english, create_time) VALUES(?,?,?,?,?)';
           let addSqlParams = [
             result.newslist[0].type,
@@ -37,13 +36,14 @@ function get(url) {
               count++;
               get(url);
               clearTimeout(timer);
-            }, 300);
+            }, 200);
           });
         }else{
+          console.log("重复", moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'));
           let timeset = setTimeout(() => {
             get(url);
             clearTimeout(timeset);
-          }, 300);
+          }, 200);
         }
       })
     });
