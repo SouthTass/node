@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon test.js"
   },
   "repository": {
     "type": "git",
@@ -17,11 +18,19 @@
   },
   "homepage": "https://github.com/SouthTass/node-learn#readme",
   "dependencies": {
+    "express": "^4.15.2",
     "koa": "^2.12.1",
+    "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
+    "koa-route": "^3.2.0",
     "koa-router": "^9.4.0",
+    "koa-websocket": "^6.0.0",
+    "koa2": "^2.0.0-alpha.7",
     "moment": "^2.27.0",
     "mysql": "^2.18.1",
+    "nodejs-websocket": "^1.7.2",
+    "nodemon": "^2.0.7",
+    "socket.io": "^3.0.4",
     "superagent": "^6.1.0"
   }
 }

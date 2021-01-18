@@ -17,11 +17,11 @@ function get(url) {
       let result = JSON.parse(res.text);
       let sql = 'SELECT content FROM dujitang';
       connection.query(sql, function (errq, resq) {
+        console.log(resq);
         let index = resq.findIndex((item) => { return result.newslist[0].content == item.content });
         console.log(index == -1 ? "唯一" : `重复${moment()}`);
         if(index == -1){
           let addSql = 'INSERT INTO dujitang(content,create_time) VALUES(?,?)';
-          // console.log(result);
           let addSqlParams = [
             result.newslist[0].content, 
             moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
